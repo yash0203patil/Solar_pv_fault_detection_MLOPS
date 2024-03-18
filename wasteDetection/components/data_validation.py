@@ -31,11 +31,11 @@ class DataValidation:
         try:
             validation_status = None
 
-            all_files = os.listdir(self.data_ingestion_artifact.feature_store_path)
+            all_files = os.listdir(os.path.join(self.data_ingestion_artifact.feature_store_path,"SOLAR ANNOTATION"))
 
             for file in all_files:
                 if file not in self.data_validation_config.required_file_list:
-                    validation_status = True # change top false
+                    validation_status = False # change top false
                     os.makedirs(self.data_validation_config.data_validation_dir, exist_ok=True)
                     with open(self.data_validation_config.valid_status_file_dir, 'w') as f:
                         f.write(f"Validation status: {validation_status}")

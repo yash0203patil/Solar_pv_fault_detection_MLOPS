@@ -3,7 +3,7 @@ from wasteDetection.logger import logging
 from wasteDetection.exception import AppException
 from wasteDetection.components.data_ingestion import DataIngestion
 from wasteDetection.components.data_validation import DataValidation
-# from wasteDetection.components.model_trainer import ModelTrainer
+from wasteDetection.components.model_trainer import ModelTrainer
 
 
 from wasteDetection.entity.config_entity import (DataIngestionConfig,
