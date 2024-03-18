@@ -7,7 +7,7 @@ DATA_INGESTION_DIR_NAME: str = "data_ingestion"
 
 DATA_INGESTION_FEATURE_STORE_DIR: str = "feature_store"
 
-DATA_DOWNLOAD_URL: str = "https://drive.google.com/file/d/1H6sjQpVGdrYT_e1hDlfqH4jYhhijMzt7/view?usp=sharing"
+DATA_DOWNLOAD_URL: str = "https://drive.google.com/file/d/1DCqaD6O1b4B2NQQG37qELIoJMFV8k4a7/view?usp=sharing"
 
 
 

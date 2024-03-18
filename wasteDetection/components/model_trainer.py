@@ -25,7 +25,7 @@ class ModelTrainer:
         try:
             logging.info("Unzipping data")
             model = YOLO(self.model_trainer_config.weight_name)
-            model.train(data = os.path.join(self.data_ingestion_artifact.feature_store_path, "SOLAR_ANNOTATION" , "data.yaml"), 
+            model.train(data = os.path.join(self.data_ingestion_artifact.feature_store_path, "SOLAR_ANNOTATION" ,"data.yaml"), 
                                      epochs = self.model_trainer_config.no_epochs, 
                                      batch = self.model_trainer_config.batch_size)
            
