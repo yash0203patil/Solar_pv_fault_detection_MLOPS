@@ -20,6 +20,7 @@ class TrainPipeline:
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidationConfig()
         self.model_trainer_config = ModelTrainerConfig()
+        
 
 
     
@@ -75,11 +76,12 @@ class TrainPipeline:
 
 
     
-    def start_model_trainer(self
+    def start_model_trainer(self, data_ingestion_artifact : DataIngestionArtifact
     ) -> ModelTrainerArtifact:
         try:
             model_trainer = ModelTrainer(
-                model_trainer_config=self.model_trainer_config,
+                data_ingestion_artifact = data_ingestion_artifact,
+                model_trainer_config = self.model_trainer_config,
             )
             model_trainer_artifact = model_trainer.initiate_model_trainer()
             return model_trainer_artifact
@@ -101,7 +103,9 @@ class TrainPipeline:
             )
 
             if data_validation_artifact.validation_status == True:
-                model_trainer_artifact = self.start_model_trainer()
+                model_trainer_artifact = self.start_model_trainer(
+                    data_ingestion_artifact=data_ingestion_artifact
+                )
             
             else:
                 raise Exception("Your data is not in correct format")

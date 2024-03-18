@@ -1,56 +1,41 @@
 import os,sys
 import yaml
-from wasteDetection.utils.main_utils import read_yaml_file
+from ultralytics import YOLO
 from wasteDetection.logger import logging
-from wasteDetection.exception import SignException
+from wasteDetection.exception import AppException
 from wasteDetection.entity.config_entity import ModelTrainerConfig
-from wasteDetection.entity.artifacts_entity import ModelTrainerArtifact
-
+from wasteDetection.entity.artifacts_entity import ModelTrainerArtifact,DataIngestionArtifact
+from wasteDetection.entity.config_entity import DataIngestionConfig
 
 
 class ModelTrainer:
     def __init__(
         self,
+        data_ingestion_artifact: DataIngestionArtifact,
         model_trainer_config: ModelTrainerConfig,
     ):
+        self.data_ingestion_artifact = data_ingestion_artifact
         self.model_trainer_config = model_trainer_config
 
 
     
-    def initiate_model_trainer(self,) -> ModelTrainerArtifact:
+    def initiate_model_trainer(self) -> ModelTrainerArtifact:
         logging.info("Entered initiate_model_trainer method of ModelTrainer class")
 
         try:
             logging.info("Unzipping data")
-            os.system("unzip Sign_language_data.zip")
-            os.system("rm Sign_language_data.zip")
-
-            with open("data.yaml", 'r') as stream:
-                num_classes = str(yaml.safe_load(stream)['nc'])
-
-            model_config_file_name = self.model_trainer_config.weight_name.split(".")[0]
-            print(model_config_file_name)
-
-            config = read_yaml_file(f"yolov5/models/{model_config_file_name}.yaml")
-
-            config['nc'] = int(num_classes)
-
-
-            with open(f'yolov5/models/custom_{model_config_file_name}.yaml', 'w') as f:
-                yaml.dump(config, f)
-
-            os.system(f"cd yolov5/ && python train.py --img 416 --batch {self.model_trainer_config.batch_size} --epochs {self.model_trainer_config.no_epochs} --data ../data.yaml --cfg ./models/custom_yolov5s.yaml --weights {self.model_trainer_config.weight_name} --name yolov5s_results  --cache")
-            os.system("cp yolov5/runs/train/yolov5s_results/weights/best.pt yolov5/")
-            os.makedirs(self.model_trainer_config.model_trainer_dir, exist_ok=True)
-            os.system(f"cp yolov5/runs/train/yolov5s_results/weights/best.pt {self.model_trainer_config.model_trainer_dir}/")
+            model = YOLO(self.model_trainer_config.weight_name)
+            model.train(data = os.path.join(self.data_ingestion_artifact.feature_store_path, "SOLAR_ANNOTATION" , "data.yaml"), 
+                                     epochs = self.model_trainer_config.no_epochs, 
+                                     batch = self.model_trainer_config.batch_size)
            
-            os.system("rm -rf yolov5/runs")
-            os.system("rm -rf train")
-            os.system("rm -rf test")
-            os.system("rm -rf data.yaml")
+            # os.system("cp runs/detect/train/weights/best.pt yolov8/")
+            # os.makedirs(self.model_trainer_config.model_trainer_dir, exist_ok=True)
+            # os.system(f"cp runs/detect/train/weights/best.pt {self.model_trainer_config.model_trainer_dir}/")
+           
 
             model_trainer_artifact = ModelTrainerArtifact(
-                trained_model_file_path="yolov5/best.pt",
+                trained_model_file_path="yolov8/best.pt",
             )
 
             logging.info("Exited initiate_model_trainer method of ModelTrainer class")
@@ -60,6 +45,6 @@ class ModelTrainer:
 
 
         except Exception as e:
-            raise SignException(e, sys)
+            raise AppException(e, sys)
 
 

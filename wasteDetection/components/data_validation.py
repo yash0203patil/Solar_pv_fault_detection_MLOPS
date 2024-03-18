@@ -31,7 +31,7 @@ class DataValidation:
         try:
             validation_status = None
 
-            all_files = os.listdir(os.path.join(self.data_ingestion_artifact.feature_store_path,"SOLAR ANNOTATION"))
+            all_files = os.listdir(os.path.join(self.data_ingestion_artifact.feature_store_path,"SOLAR_ANNOTATION"))
 
             for file in all_files:
                 if file not in self.data_validation_config.required_file_list:
