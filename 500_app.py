@@ -7,7 +7,7 @@ import math
 import torch
 from datetime import datetime , timezone 
 import os
-# import requests
+import requests
 from wasteDetection.utils.main_utils import encodeImageIntoBase64 , decodeImage
 
 
