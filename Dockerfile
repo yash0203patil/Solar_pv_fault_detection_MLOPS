@@ -1,10 +1,8 @@
 FROM python:3.7-slim-buster
-EXPOSE 8501
+WORKDIR /app
+COPY . /app
 
 RUN apt update -y && apt install awscli -y
-WORKDIR /app
 
-COPY . /app
-RUN pip install -r requirements.txt
-
-ENTRYPOINT ["streamlit","run","500_app.py","--server.port=8501","--server.address=0.0.0.0"]
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 unzip -y && pip install -r requirements.txt
+CMD ["python3", "app.py"]

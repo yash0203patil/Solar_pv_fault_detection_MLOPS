@@ -9,7 +9,7 @@ import yaml
 import os
 import base64
 
-from wasteDetection.exception import SignException
+from wasteDetection.exception import AppException
 from wasteDetection.logger import logging
 
 
@@ -20,7 +20,7 @@ def read_yaml_file(file_path: str) -> dict:
             return yaml.safe_load(yaml_file)
 
     except Exception as e:
-        raise SignException(e, sys) from e
+        raise AppException(e, sys) from e
     
 
 def write_yaml_file(file_path: str, content: object, replace: bool = False) -> None:
