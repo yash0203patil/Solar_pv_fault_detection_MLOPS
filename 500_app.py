@@ -7,6 +7,8 @@ import math
 import torch
 from datetime import datetime , timezone 
 import os
+# import requests
+from wasteDetection.utils.main_utils import encodeImageIntoBase64 , decodeImage
 
 
 
@@ -164,6 +166,9 @@ st.write("4. The Segmented Mask Image indicates the total defected area of the s
 st.write("5. Download Report will give the detailed analysis of solar panel image ")
 
 uploaded_files = st.file_uploader("Upload images", type=['jpg', 'jpeg', 'png'], accept_multiple_files=True)
+
+# image = requests.get()
+# decodeImage(image , uploaded_files)
 
 if len(uploaded_files) < 11:
     for uploaded_file in uploaded_files:
