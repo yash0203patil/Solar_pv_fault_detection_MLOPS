@@ -14,7 +14,7 @@ import os
 # Models Initialization
 # seg_model = YOLO('seg/best.pt')
 # # det_model = YOLO('obj/best.pt')
-det_model = YOLO("models/DET_500_epochs.pt")
+det_model = YOLO("models/best.pt")
 
 
 # Set up Streamlit sidebar for user controls
