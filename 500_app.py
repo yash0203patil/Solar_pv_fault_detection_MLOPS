@@ -32,7 +32,7 @@ show_processed = st.sidebar.checkbox("Show Processed Image", value=True)
 
 
 # 4. Checkboxes for displaying masks and detection boxes
-show_segmentation_mask = st.sidebar.checkbox("Show Segmentation Mask", value=True)
+# show_segmentation_mask = st.sidebar.checkbox("Show Segmentation Mask", value=True)
 # show_detection_boxes = st.sidebar.checkbox("Show Detection Boxes", value=True)
 
 # Functions and main app logic remains largely unchanged
